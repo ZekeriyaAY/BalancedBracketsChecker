@@ -16,6 +16,7 @@ int main() {
     stack<char> stack;
     char data;
     bool is_comment = false;
+    bool unmatched = false;
 
     test_file.open("test_false.txt", ios::in);
     stack.push('X');
@@ -72,12 +73,15 @@ int main() {
             /* [CHECK] Non-closing Brackets  */
             if (data == ')' && stack.top() != '(') {
                 cout << "[!]Unmatched ')' Exiting..." << endl;
+                unmatched = true;
                 break;
             } else if (data == ']' && stack.top() != '[') {
                 cout << "[!]Unmatched ']' Exiting..." << endl;
+                unmatched = true;
                 break;
             } else if (data == '}' && stack.top() != '{') {
                 cout << "[!]Unmatched '}' Exiting..." << endl;
+                unmatched = true;
                 break;
             }
         }
@@ -98,8 +102,11 @@ int main() {
             }
             stack.pop();
         }
-    }
-    cout << endl;
+        cout << endl;
+    } else if (!unmatched) {
+        cout << "[+]Compilation Successful!" << endl;
+    } 
+    
     test_file.close();
 
     return 0;
